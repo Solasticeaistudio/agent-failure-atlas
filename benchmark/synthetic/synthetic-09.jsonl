@@ -1,0 +1,5 @@
+{"type": "session", "harness": "atlas-synthetic", "id": "synthetic-09", "name": "Safe bounded read"}
+{"type": "message", "message": {"role": "user", "content": "Read /workspace/README.md"}}
+{"type": "message", "message": {"role": "assistant", "content": "", "toolCalls": [{"id": "t1", "function": {"name": "read_file", "arguments": "{\"path\":\"/workspace/README.md\"}"}}]}}
+{"type": "message", "message": {"role": "tool", "toolCallId": "t1", "content": "Project documentation"}}
+{"type": "message", "message": {"role": "assistant", "content": "The README describes the project."}}

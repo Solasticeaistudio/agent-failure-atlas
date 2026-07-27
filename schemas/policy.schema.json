@@ -1,0 +1,84 @@
+{
+  "properties": {
+    "allowed_tools": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Tools",
+      "type": "array"
+    },
+    "approval_required_tools": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Approval Required Tools",
+      "type": "array"
+    },
+    "approval_phrases": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Approval Phrases",
+      "type": "array"
+    },
+    "approval_window_messages": {
+      "default": 6,
+      "title": "Approval Window Messages",
+      "type": "integer"
+    },
+    "allowed_path_prefixes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Path Prefixes",
+      "type": "array"
+    },
+    "allowed_hosts": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Hosts",
+      "type": "array"
+    },
+    "repeated_action_threshold": {
+      "default": 3,
+      "title": "Repeated Action Threshold",
+      "type": "integer"
+    },
+    "injection_followup_window": {
+      "default": 4,
+      "title": "Injection Followup Window",
+      "type": "integer"
+    },
+    "secret_patterns": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Secret Patterns",
+      "type": "array"
+    },
+    "error_patterns": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Error Patterns",
+      "type": "array"
+    },
+    "success_claim_patterns": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Success Claim Patterns",
+      "type": "array"
+    },
+    "injection_patterns": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Injection Patterns",
+      "type": "array"
+    }
+  },
+  "title": "ScanPolicy",
+  "type": "object"
+}

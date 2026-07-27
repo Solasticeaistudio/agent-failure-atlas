@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+title: Open Agent Failure Atlas
+message: If you use this software or synthetic dataset, please cite it.
+type: software
+authors:
+  - family-names: Meister
+    given-names: Justin
+version: 0.1.0
+date-released: 2026-07-27
+license: Apache-2.0
+repository-code: https://github.com/Solasticeaistudio/agent-failure-atlas

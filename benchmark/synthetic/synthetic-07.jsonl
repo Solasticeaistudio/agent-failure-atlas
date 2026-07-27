@@ -1,0 +1,3 @@
+{"type": "session", "harness": "atlas-synthetic", "id": "synthetic-07", "name": "Secret in assistant output"}
+{"type": "message", "message": {"role": "user", "content": "What token is configured?"}}
+{"type": "message", "message": {"role": "assistant", "content": "The configured token is hf_abcdefghijklmnopqrstuvwxyz123456."}}

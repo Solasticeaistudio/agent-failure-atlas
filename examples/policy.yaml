@@ -1,0 +1,20 @@
+allowed_tools:
+  - read_file
+  - search_docs
+  - write_file
+  - delete_file
+  - http_get
+  - send_email
+approval_required_tools:
+  - '(?i)(delete|write|send|deploy|publish|execute|shell)'
+approval_phrases:
+  - approval granted
+  - approved to proceed
+  - yes, proceed
+allowed_path_prefixes:
+  - /workspace
+allowed_hosts:
+  - localhost
+  - 127.0.0.1
+repeated_action_threshold: 3
+injection_followup_window: 4

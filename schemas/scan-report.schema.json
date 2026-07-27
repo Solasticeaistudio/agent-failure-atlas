@@ -1,0 +1,379 @@
+{
+  "$defs": {
+    "Evidence": {
+      "properties": {
+        "message_index": {
+          "title": "Message Index",
+          "type": "integer"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "excerpt": {
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "tool_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Name"
+        },
+        "tool_arguments": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Arguments"
+        }
+      },
+      "required": [
+        "message_index",
+        "role",
+        "excerpt"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Finding": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "detector": {
+          "title": "Detector",
+          "type": "string"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/Severity"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "remediation": {
+          "title": "Remediation",
+          "type": "string"
+        },
+        "confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "detector",
+        "category",
+        "severity",
+        "title",
+        "description",
+        "remediation",
+        "confidence"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "ScanMetrics": {
+      "properties": {
+        "total_messages": {
+          "title": "Total Messages",
+          "type": "integer"
+        },
+        "total_tool_calls": {
+          "title": "Total Tool Calls",
+          "type": "integer"
+        },
+        "total_findings": {
+          "title": "Total Findings",
+          "type": "integer"
+        },
+        "findings_by_severity": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Findings By Severity",
+          "type": "object"
+        },
+        "findings_by_category": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Findings By Category",
+          "type": "object"
+        },
+        "scan_duration_ms": {
+          "title": "Scan Duration Ms",
+          "type": "number"
+        }
+      },
+      "required": [
+        "total_messages",
+        "total_tool_calls",
+        "total_findings",
+        "findings_by_severity",
+        "findings_by_category",
+        "scan_duration_ms"
+      ],
+      "title": "ScanMetrics",
+      "type": "object"
+    },
+    "Severity": {
+      "enum": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "ToolCall": {
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "function": {
+          "$ref": "#/$defs/ToolFunction"
+        }
+      },
+      "required": [
+        "id",
+        "function"
+      ],
+      "title": "ToolCall",
+      "type": "object"
+    },
+    "ToolFunction": {
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "arguments": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          ],
+          "default": "{}",
+          "title": "Arguments"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ToolFunction",
+      "type": "object"
+    },
+    "TraceMessage": {
+      "additionalProperties": true,
+      "properties": {
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "content": {
+          "default": "",
+          "title": "Content",
+          "type": "string"
+        },
+        "reasoningContent": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reasoningcontent"
+        },
+        "toolCalls": {
+          "items": {
+            "$ref": "#/$defs/ToolCall"
+          },
+          "title": "Toolcalls",
+          "type": "array"
+        },
+        "toolCallId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Toolcallid"
+        },
+        "timestamp": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Timestamp"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        }
+      },
+      "required": [
+        "role"
+      ],
+      "title": "TraceMessage",
+      "type": "object"
+    },
+    "TraceSession": {
+      "additionalProperties": true,
+      "properties": {
+        "harness": {
+          "title": "Harness",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "messages": {
+          "items": {
+            "$ref": "#/$defs/TraceMessage"
+          },
+          "title": "Messages",
+          "type": "array"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        }
+      },
+      "required": [
+        "harness",
+        "id"
+      ],
+      "title": "TraceSession",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "policy_hash": {
+      "title": "Policy Hash",
+      "type": "string"
+    },
+    "session": {
+      "$ref": "#/$defs/TraceSession"
+    },
+    "findings": {
+      "items": {
+        "$ref": "#/$defs/Finding"
+      },
+      "title": "Findings",
+      "type": "array"
+    },
+    "metrics": {
+      "$ref": "#/$defs/ScanMetrics"
+    }
+  },
+  "required": [
+    "policy_hash",
+    "session",
+    "findings",
+    "metrics"
+  ],
+  "title": "ScanReport",
+  "type": "object"
+}
