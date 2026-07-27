@@ -7,6 +7,7 @@ from typing import Annotated
 
 import typer
 
+from .adapters import load_with_adapter
 from .compare import compare_reports
 from .hub import download_trace_dataset, publish_dataset
 from .loaders import discover_trace_files, dump_sts, load_trace_file
@@ -29,7 +30,7 @@ def scan(
     out: Annotated[Path | None, typer.Option("--out", "-o")] = None,
     markdown: Annotated[Path | None, typer.Option("--markdown")] = None,
 ) -> None:
-    session = load_trace_file(trace)
+    session = load_with_adapter(trace)
     report = scan_session(session, load_policy(policy))
     if out:
         write_json_report(report, out)
@@ -51,7 +52,7 @@ def scan_dir(
     summaries = []
     for path in files:
         try:
-            report = scan_session(load_trace_file(path), active_policy)
+            report = scan_session(load_with_adapter(path), active_policy)
         except Exception as exc:  # keep batch scans moving and report failures explicitly
             summaries.append({"path": str(path), "error": str(exc)})
             continue
@@ -119,7 +120,7 @@ def redact(
     out: Annotated[Path, typer.Option("--out", "-o")],
     policy: Annotated[Path | None, typer.Option("--policy", "-p")] = None,
 ) -> None:
-    session = load_trace_file(trace)
+    session = load_with_adapter(trace)
     redacted = redact_session(session, load_policy(policy))
     dump_sts(redacted, out)
     typer.echo(str(out))
