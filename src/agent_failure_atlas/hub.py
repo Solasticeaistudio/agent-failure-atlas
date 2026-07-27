@@ -43,6 +43,7 @@ def publish_dataset(
     safe_metadata = {"metrics.json", "findings.json", "labels.json", "results.json", "summary.json"}
     unsafe = [p for p in files if p.suffix.lower() in {".jsonl", ".json"}
               and "redacted" not in p.name.lower()
+              and "synthetic" not in p.name.lower()
               and p.name not in safe_metadata
               and "report" not in p.name.lower()]
     if unsafe:
