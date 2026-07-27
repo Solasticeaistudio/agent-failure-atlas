@@ -14,7 +14,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output", type=Path,
-        default=ROOT / "dist" / "agent-failure-atlas-v0.1.0.zip",
+        default=ROOT / "dist" / "agent-failure-atlas-v0.2.0.zip",
     )
     args = parser.parse_args()
     output = args.output
