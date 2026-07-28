@@ -13,7 +13,7 @@ from .hub import download_trace_dataset, publish_dataset
 from .loaders import discover_trace_files, dump_sts, load_trace_file
 from .policy import load_policy
 from .redaction import redact_session
-from .reporting import load_json_report, report_markdown, write_json_report
+from .reporting import delta_findings_payload, load_json_report, report_markdown, write_json_report
 from .scanner import scan_session
 
 app = typer.Typer(
@@ -29,6 +29,7 @@ def scan(
     policy: Annotated[Path | None, typer.Option("--policy", "-p")] = None,
     out: Annotated[Path | None, typer.Option("--out", "-o")] = None,
     markdown: Annotated[Path | None, typer.Option("--markdown")] = None,
+    delta_findings: Annotated[Path | None, typer.Option("--delta-findings", help="Write DeltaStore-compatible findings JSON")] = None,
 ) -> None:
     session = load_with_adapter(trace)
     report = scan_session(session, load_policy(policy))
@@ -37,6 +38,9 @@ def scan(
     if markdown:
         markdown.parent.mkdir(parents=True, exist_ok=True)
         markdown.write_text(report_markdown(report), encoding="utf-8")
+    if delta_findings:
+        delta_findings.parent.mkdir(parents=True, exist_ok=True)
+        delta_findings.write_text(json.dumps(delta_findings_payload(report), indent=2), encoding="utf-8")
     typer.echo(report.model_dump_json(indent=2) if not out else str(out))
 
 

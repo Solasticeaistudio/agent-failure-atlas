@@ -101,6 +101,7 @@ class Evidence(BaseModel):
 
 
 class Finding(BaseModel):
+    model_config = ConfigDict(extra="allow")
     id: str
     detector: str
     category: str
@@ -110,6 +111,15 @@ class Finding(BaseModel):
     remediation: str
     confidence: float = Field(ge=0.0, le=1.0)
     evidence: list[Evidence] = Field(default_factory=list)
+    trace_id: str | None = None
+    taxonomy_version: str | None = None
+    rule_id: str | None = None
+    affected_policy: str | None = None
+    affected_resource: str | None = None
+    evidence_event_ids: list[str] = Field(default_factory=list)
+    branch_id: str | None = None
+    checkpoint_id: str | None = None
+    detector_metadata: dict[str, Any] = Field(default_factory=dict)
 
 
 class ScanPolicy(BaseModel):

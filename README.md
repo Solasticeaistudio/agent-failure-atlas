@@ -18,9 +18,9 @@ license: apache-2.0
 
 - **GitHub:** [Solasticeaistudio/agent-failure-atlas](https://github.com/Solasticeaistudio/agent-failure-atlas)
 - **Hugging Face Dataset:** [Synthetic benchmark](https://huggingface.co/datasets/solsticestudioai/agent-failure-atlas-benchmark)
-- **Interactive Space:** pending Hugging Face hosting entitlement; run locally with `python space/app.py`
+- **Interactive Space:** [Agent Failure Atlas Static Space](https://huggingface.co/spaces/solsticestudioai/agent-failure-atlas) ([direct browser host](https://solsticestudioai-agent-failure-atlas.static.hf.space/))
 
-The Atlas reads Hugging Face **Session Trace Simple Format (STS)** JSONL and normalized trace records, applies deterministic policy checks, and produces structured findings tied to exact trace positions. It is designed to complement the Hugging Face trace viewer: the viewer shows *what happened*; the Atlas begins answering *what failed, where, and under which policy*.
+The Atlas reads Hugging Face **Session Trace Simple Format (STS)** JSONL, normalized trace records, and `solstice-agent-trace-exchange/v1` envelopes, applies deterministic policy checks, and produces structured findings tied to exact trace positions. It is designed to complement the Hugging Face trace viewer: the viewer shows *what happened*; the Atlas begins answering *what failed, where, and under which policy*.
 
 ## Why this exists
 

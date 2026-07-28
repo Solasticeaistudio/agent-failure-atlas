@@ -5,6 +5,33 @@ from pathlib import Path
 from .models import ScanReport
 
 
+def delta_findings_payload(report: ScanReport) -> dict:
+    """Return the stable, evidence-linked subset consumed by DeltaStore."""
+    return {
+        "trace_id": report.session.metadata.get("trace_id", report.session.id),
+        "taxonomy_version": "agent-failure-atlas/v1",
+        "findings": [
+            {
+                "finding_id": finding.id,
+                "trace_id": finding.trace_id or report.session.id,
+                "taxonomy_version": finding.taxonomy_version or "agent-failure-atlas/v1",
+                "rule_id": finding.rule_id or finding.detector,
+                "category": finding.category,
+                "severity": finding.severity.value,
+                "affected_policy": finding.affected_policy,
+                "affected_resource": finding.affected_resource,
+                "evidence_event_ids": finding.evidence_event_ids,
+                "evidence_refs": finding.evidence_event_ids,
+                "branch_id": finding.branch_id,
+                "checkpoint_id": finding.checkpoint_id,
+                "message": finding.description,
+                "detector_metadata": finding.detector_metadata,
+            }
+            for finding in report.findings
+        ],
+    }
+
+
 def write_json_report(report: ScanReport, path: str | Path) -> Path:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)

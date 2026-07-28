@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
 
+from .deltastore_exchange import EXCHANGE_VERSION, load_exchange
 from .loaders import TraceFormatError, load_trace_file
 from .models import TraceMessage, TraceSession
 
@@ -18,6 +19,24 @@ class TraceAdapter(Protocol):
     def load(self, path: Path) -> TraceSession: ...
 
 
+@dataclass(frozen=True)
+class DeltaStoreExchangeAdapter:
+    format_id: str = EXCHANGE_VERSION
+
+    def accepts(self, path: Path) -> bool:
+        try:
+            value = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return False
+        return isinstance(value, dict) and value.get("schema_version") == EXCHANGE_VERSION
+
+    def load(self, path: Path) -> TraceSession:
+        if not self.accepts(path):
+            raise TraceFormatError(f"Input is not {self.format_id}: {path}")
+        session, _ = load_exchange(path)
+        return session
+
+
 def _first_rows(path: Path) -> list[dict]:
     rows = []
     with path.open("r", encoding="utf-8") as handle:
@@ -25,7 +44,10 @@ def _first_rows(path: Path) -> list[dict]:
             line = handle.readline()
             if not line:
                 break
-            value = json.loads(line)
+            try:
+                value = json.loads(line)
+            except json.JSONDecodeError:
+                return []
             if not isinstance(value, dict):
                 return []
             rows.append(value)
@@ -106,7 +128,7 @@ OTLPAdapter = NativeJSONLAdapter("otlp-jsonl", ("span",))
 
 
 ADAPTERS: tuple[TraceAdapter, ...] = (
-    HuggingFaceSTSAdapter(), OpenAIChatJSONLAdapter(), ClaudeCodeAdapter,
+    DeltaStoreExchangeAdapter(), HuggingFaceSTSAdapter(), OpenAIChatJSONLAdapter(), ClaudeCodeAdapter,
     CodexAdapter, PiAgentAdapter, OTLPAdapter,
 )
 
