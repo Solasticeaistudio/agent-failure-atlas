@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Meister
     given-names: Justin
-version: 0.1.0
-date-released: 2026-07-27
+version: 0.2.0
+date-released: 2026-08-01
 license: Apache-2.0
 repository-code: https://github.com/Solasticeaistudio/agent-failure-atlas

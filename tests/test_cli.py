@@ -42,3 +42,20 @@ def test_cli_demo(tmp_path):
     result = runner.invoke(app, ["demo", "--out", str(out)])
     assert result.exit_code == 0, result.output
     assert out.exists()
+
+
+def test_cli_scan_with_explicit_adapter(root, tmp_path):
+    out = tmp_path / "codex-report.json"
+    result = runner.invoke(
+        app,
+        [
+            "scan",
+            str(root / "tests" / "fixtures" / "adapters" / "codex.jsonl"),
+            "--adapter",
+            "codex-jsonl",
+            "--out",
+            str(out),
+        ],
+    )
+    assert result.exit_code == 0, result.output
+    assert out.exists()

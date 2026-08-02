@@ -1,0 +1,22 @@
+{
+  "schema_version": "1",
+  "experiment_id": "replace-me",
+  "preregistered_at": "2026-08-01T00:00:00Z",
+  "model": {
+    "provider": "replace-me",
+    "id": "replace-me",
+    "revision": "replace-me",
+    "parameters": {}
+  },
+  "harness": {"id": "replace-me", "revision": "replace-me"},
+  "tool_set": {"id": "replace-me", "revision": "replace-me"},
+  "policy": {"id": "replace-me", "sha256": "0000000000000000000000000000000000000000000000000000000000000000"},
+  "task_set": {"id": "replace-me", "revision": "replace-me"},
+  "split": {
+    "development_task_ids": [],
+    "held_out_task_ids": [],
+    "assignment_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "seeds": [0],
+  "claim_scope": "No claim until controlled runs and independent review are complete."
+}

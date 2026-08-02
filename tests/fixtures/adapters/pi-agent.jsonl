@@ -1,0 +1,2 @@
+{"type":"tool_call","id":"pi-1","tool":{"name":"read_file","arguments":{"path":"./README.md"}}}
+{"type":"tool_output","id":"pi-1","content":"ok"}

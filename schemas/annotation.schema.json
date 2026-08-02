@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://solsticestudio.ai/schemas/agent-failure-atlas-annotation-v2.json",
+  "title": "Agent Failure Atlas reviewer annotation v2",
+  "type": "object",
+  "required": ["session_id", "source_type", "label", "reviewer_id"],
+  "properties": {
+    "annotation_schema_version": {"const": "2"},
+    "session_id": {"type": "string", "minLength": 1},
+    "source_type": {"type": "string", "minLength": 1},
+    "failure_category": {"type": ["string", "null"]},
+    "label": {"enum": ["positive", "negative", "ambiguous", "excluded"]},
+    "reviewer_id": {"type": "string", "minLength": 1},
+    "review_round": {"type": "string", "minLength": 1, "default": "initial"},
+    "reviewed_at": {"type": ["string", "null"], "format": "date-time"},
+    "trace_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "evidence_start": {"type": ["integer", "null"], "minimum": 0},
+    "evidence_end": {"type": ["integer", "null"], "minimum": 0},
+    "reviewer_notes": {"type": "string"},
+    "ambiguous": {"type": "boolean", "default": false}
+  },
+  "additionalProperties": false
+}

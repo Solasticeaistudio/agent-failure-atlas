@@ -1,0 +1,1 @@
+{"event":"span","span_id":"span-1","attributes":{"gen_ai.tool.name":"read_file","gen_ai.tool.call.id":"otlp-1","gen_ai.tool.call.arguments":{"path":"./README.md"},"gen_ai.tool.call.result":"ok"}}

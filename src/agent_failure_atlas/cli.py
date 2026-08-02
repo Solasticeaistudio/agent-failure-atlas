@@ -25,13 +25,14 @@ app = typer.Typer(
 
 @app.command()
 def scan(
-    trace: Annotated[Path, typer.Argument(help="STS or normalized JSONL trace")],
+    trace: Annotated[Path, typer.Argument(help="Supported trace or exchange file")],
     policy: Annotated[Path | None, typer.Option("--policy", "-p")] = None,
+    adapter: Annotated[str | None, typer.Option("--adapter")] = None,
     out: Annotated[Path | None, typer.Option("--out", "-o")] = None,
     markdown: Annotated[Path | None, typer.Option("--markdown")] = None,
     delta_findings: Annotated[Path | None, typer.Option("--delta-findings", help="Write DeltaStore-compatible findings JSON")] = None,
 ) -> None:
-    session = load_with_adapter(trace)
+    session = load_with_adapter(trace, format_id=adapter)
     report = scan_session(session, load_policy(policy))
     if out:
         write_json_report(report, out)
@@ -48,6 +49,7 @@ def scan(
 def scan_dir(
     directory: Annotated[Path, typer.Argument(help="Directory containing JSONL traces")],
     policy: Annotated[Path | None, typer.Option("--policy", "-p")] = None,
+    adapter: Annotated[str | None, typer.Option("--adapter")] = None,
     out_dir: Annotated[Path, typer.Option("--out-dir", "-o")] = Path("atlas-reports"),
 ) -> None:
     active_policy = load_policy(policy)
@@ -56,7 +58,7 @@ def scan_dir(
     summaries = []
     for path in files:
         try:
-            report = scan_session(load_with_adapter(path), active_policy)
+            report = scan_session(load_with_adapter(path, format_id=adapter), active_policy)
         except Exception as exc:  # keep batch scans moving and report failures explicitly
             summaries.append({"path": str(path), "error": str(exc)})
             continue
@@ -91,7 +93,7 @@ def publish(
     report: Annotated[Path, typer.Option("--report", help="Prepared redacted artifact directory")],
     token: Annotated[str | None, typer.Option("--token", envvar="HF_TOKEN")] = None,
     dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
-    yes: Annotated[bool, typer.Option("--yes", help="Confirm upload")]=False,
+    yes: Annotated[bool, typer.Option("--yes", help="Confirm upload")] = False,
 ) -> None:
     """Publish explicitly prepared redacted benchmark artifacts to the Hub."""
     if not dry_run and not yes:
@@ -123,8 +125,9 @@ def redact(
     trace: Annotated[Path, typer.Argument()],
     out: Annotated[Path, typer.Option("--out", "-o")],
     policy: Annotated[Path | None, typer.Option("--policy", "-p")] = None,
+    adapter: Annotated[str | None, typer.Option("--adapter")] = None,
 ) -> None:
-    session = load_with_adapter(trace)
+    session = load_with_adapter(trace, format_id=adapter)
     redacted = redact_session(session, load_policy(policy))
     dump_sts(redacted, out)
     typer.echo(str(out))

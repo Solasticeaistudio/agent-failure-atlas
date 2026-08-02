@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://solsticestudio.ai/schemas/agent-failure-atlas-experiment-v1.json",
+  "title": "Agent Failure Atlas controlled experiment manifest v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "experiment_id",
+    "preregistered_at",
+    "model",
+    "harness",
+    "tool_set",
+    "policy",
+    "task_set",
+    "split",
+    "seeds",
+    "claim_scope"
+  ],
+  "properties": {
+    "schema_version": {"const": "1"},
+    "experiment_id": {"type": "string", "minLength": 1},
+    "preregistered_at": {"type": "string", "format": "date-time"},
+    "model": {"$ref": "#/$defs/versionedComponentWithParameters"},
+    "harness": {"$ref": "#/$defs/versionedComponent"},
+    "tool_set": {"$ref": "#/$defs/versionedComponent"},
+    "policy": {
+      "type": "object",
+      "required": ["id", "sha256"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "task_set": {"$ref": "#/$defs/versionedComponent"},
+    "split": {
+      "type": "object",
+      "required": ["development_task_ids", "held_out_task_ids", "assignment_sha256"],
+      "properties": {
+        "development_task_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "held_out_task_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "assignment_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "seeds": {"type": "array", "items": {"type": "integer"}, "minItems": 1, "uniqueItems": true},
+    "claim_scope": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "versionedComponent": {
+      "type": "object",
+      "required": ["id", "revision"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "versionedComponentWithParameters": {
+      "type": "object",
+      "required": ["provider", "id", "revision", "parameters"],
+      "properties": {
+        "provider": {"type": "string", "minLength": 1},
+        "id": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1},
+        "parameters": {"type": "object"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

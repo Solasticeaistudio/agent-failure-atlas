@@ -110,7 +110,11 @@ agent-atlas scan-hf trace-commons/agent-traces \
   --out-dir artifacts/trace-commons
 ```
 
-The Hub already renders raw Claude Code, Codex, Pi, Hermes, and other supported sessions. Atlas currently analyzes STS and normalized records, with explicit STS and OpenAI-compatible adapter contracts that reject incompatible inputs rather than silently approximating them.
+Atlas supports Hugging Face STS, normalized datasets, OpenAI chat JSONL,
+DeltaStore exchange v1, and conservative Claude Code, Codex, Pi, and OTLP
+JSONL contracts. Adapters reject incompatible or ambiguous inputs rather than
+silently approximating them; Hermes does not yet have a stable native contract.
+See [docs/ADAPTER_CONTRACTS.md](docs/ADAPTER_CONTRACTS.md) for exact markers.
 
 ## Hugging Face-native output
 
@@ -152,7 +156,11 @@ dataset/                  dataset card and synthetic index
 
 ## What would make this research-grade
 
-The next version should add independently labeled public traces, native harness adapters, held-out scenarios, human agreement analysis, semantic detectors with calibrated uncertainty, cross-model comparisons, and explicit separation of model, harness, tool, and policy effects. See [docs/ROADMAP.md](docs/ROADMAP.md).
+The repository now includes versioned review and experiment schemas, trace
+hashing, inter-reviewer agreement, unanimous consensus, and a preregistered
+held-out protocol. Research-grade claims still require independently reviewed
+representative traces and controlled external model/harness runs; none are
+fabricated or bundled here. See [research/PROTOCOL.md](research/PROTOCOL.md).
 
 ## Safety and privacy
 

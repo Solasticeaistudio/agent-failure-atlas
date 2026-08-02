@@ -12,3 +12,7 @@ artifacts/
 atlas-reports/
 atlas-hf-reports/
 .DS_Store
+
+research/annotations/
+research/results/
+research/traces/

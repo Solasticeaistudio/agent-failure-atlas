@@ -23,3 +23,15 @@ All benchmark results remain synthetic smoke-test evidence only.
 - Added conservative Claude Code, Codex, Pi, and OTLP adapter contracts with source metadata.
 - Added clean-install wheel smoke verification and expanded comparison metadata.
 - No real traces or provider calls are included in this release.
+
+## 0.2.0 release hardening
+
+- Consolidated deterministic release generation around an explicit allowlist.
+- Excluded local artifacts, caches, build output, and private research data.
+- Added archive-content and clean-installed-wheel verification to CI.
+- Added bounded, explicit Claude Code, Codex, Pi, and OTLP adapter contracts.
+- Added sanitized native adapter fixtures and explicit CLI adapter selection.
+- Added versioned reviewer annotations with trace hashes and evidence rules.
+- Added inter-reviewer agreement and unanimous-consensus evaluation.
+- Added controlled experiment, held-out split, and review protocol templates.
+- No real traces, independent labels, or provider runs are claimed.

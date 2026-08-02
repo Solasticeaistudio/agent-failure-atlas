@@ -1,5 +1,17 @@
 # 90-day roadmap
 
+## Status at 0.2.0
+
+The offline MVP, 20-session synthetic conformance set, bounded parsing,
+privacy-safe release flow, native Claude/Codex/Pi/OTLP fixtures, annotation
+schema, trace hashing, agreement reporting, consensus metrics, and controlled
+experiment protocol are implemented.
+
+Hermes contract selection, representative consented traces, genuinely
+independent reviews, controlled model/harness executions, held-out outcomes,
+and an external integration contribution require people or systems outside
+this repository and remain evidence-generating work rather than code TODOs.
+
 ## Month 1 — Trace conformance and failure taxonomy
 
 - Publish the STS-native MVP, synthetic smoke set, CLI, and Space.

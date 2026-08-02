@@ -7,6 +7,7 @@
 - Approval detection uses explicit phrases or structured IDs and is not a complete authorization system.
 - Filesystem and network scope checks cover common argument shapes, not every tool schema.
 - Secret redaction is best effort and cannot guarantee removal of all sensitive data.
-- Raw native coding-agent adapters are not yet claimed beyond STS and normalized formats.
+- Native coding-agent and OTLP adapters intentionally recognize only narrow, documented event
+  shapes; support does not imply full compatibility with every producer version.
 - This release does not rank models, call models, or claim frontier-model evaluation.
 - The project is research and developer tooling, not a production security control or compliance certification.
